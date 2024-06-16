@@ -4,15 +4,18 @@ pipeline {
     environment {
         GIT_REPO_URL = 'https://github.com/Claudioleroi/moodle.git'
         BRANCH_NAME = 'main'
+        GIT_CREDENTIALS_ID = 'github-credentials' // Remplacez par l'ID des identifiants GitHub configurés dans Jenkins
     }
 
     stages {
         stage('Checkout Repository') {
             steps {
                 script {
-                    // Installer Git LFS
-                    sh 'git lfs install'
-                    
+                    // Forcer la mise à jour et l'installation de Git LFS
+                    sh '''
+                        git lfs install --force
+                    '''
+
                     // Configurer Git pour des connexions plus robustes
                     sh '''
                         git config --global http.postBuffer 1048576000
